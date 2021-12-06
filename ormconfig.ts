@@ -1,23 +1,25 @@
-export default {
+require('dotenv').config();
+
+module.exports = {
   'type': 'mysql',
   'synchronize': false,
   'logging': false,
-  'seeds': ['dist/data/seeds/**/*.js'],
-  'factories': ['dist/data/factories/**/*.js'],
+  'seeds': ['dist/server/data/seeds/**/*.js'],
+  'factories': ['dist/server/data/factories/**/*.js'],
   'entities': [
-    'dist/data/models/**/*.js'
+    'dist/server/data/models/**/*.js'
   ],
   'migrations': [
-    'dist/data/models/**/*.js'
+    'dist/server/data/migrations/**/*.js'
   ],
   'migrationsTableName': 'migrations',
   'subscribers': [
-    'dist/data/models/**/*.js'
+    'dist/server/data/subscribers/**/*.js'
   ],
   'cli': {
-    'migrationsDir': 'src/data/migrations',
-    'entitiesDir': 'src/data/models',
-    'subscribersDir': 'src/data/subscribers'
+    'migrationsDir': 'src/server/data/migrations',
+    'entitiesDir': 'src/server/data/models',
+    'subscribersDir': 'src/server/data/subscribers'
   },
   'keepConnectionAlive': true,
   'bigNumberStrings': false,

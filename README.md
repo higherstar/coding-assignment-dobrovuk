@@ -1,51 +1,26 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Coding Assignment
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+The goal of this assignment is to showcase your ability to develop features in an existing codebase and your coding style. 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Even though the app is small, one can easily spend the whole week working on it: perfecting styles, testing every single method, or carefully crafting every single line of code. Please don't! Do as much as you can in about 3-4 hours and share the results.
 
-## Description
+The most important part of the interview will come after this one, when we look at the app together, talk about the decisions you have made, etc..
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Submitting your solution
 
-## Installation
+Please send us the link to your public git repo fork (e.g. GitHub). We will continue to work on it during the next interview sessions. Please also indicate approximately how long you spent on the submission.
 
-```bash
-$ npm install
-```
+## Local development
 
-## Running the app
+1. Clone repository locally
+2. Run `npm install`
+3. Check the `.env` to make sure you don't have port collisions
+4. Start a temporary mysql instance and import dump, we've been using mysql 5.7
+5. Run `npm run db:seed` to import dump
+6. Run `npm run start:dev` to start the application
+7. Open `http://localhost:3000` (or the port you specified) in browser to see it working
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
+## Running Test
 
 ```bash
 # unit tests
@@ -58,16 +33,45 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+# Database schema
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+![alt text](schema.png "Database schema")
 
-## Stay in touch
+Please review the schema and feel free to make any changes as you see fit.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# Assignments
+Current application shows a list of stores with a list of filters (which you are going to implement). Because a restaurant chain can have a lot of stores, the client should be able to apply filters to find the best match. The filters include a search by store name, search by geolocation (the distance from client and stores) as well as by store working hours by weekday.
 
-## License
+#### 1. Implement infinite scroll for stores using pagination
+You can pick whatever solution or library you have in mind
 
-Nest is [MIT licensed](LICENSE).
+#### 2. Implement filters on frontend
+To implement following features:
+- sort by nearest store
+- filter by store name
+- filter by store hours of the week
+Some of these filters already have a boilerplate that you can use. Others you should implement by yourself.
+
+#### 3. Modify get stores API to include pagination and additional query params
+should match this schema: `GET: /api/stores?offset=0&limit=15&searchQuery=starbucks&lat=51.5285582&lng=-0.2416795&weekday=1&startHour=10:00&endHour=18:00`
+
+| param | type | default | description |
+|-------|------|---------|-------------|
+|offset |number|0        |*Optional*. The offset of the first item in the collection to return|
+|limit  |number|15       |*Optional*. The maximum number of entries to return|
+|searchQuery|string|     |*Optional*. Filter stores by name|
+|lat/lng|number|         |*Optional*. Location of the user|
+|weekday|number|current week day|The day of the week index; Monday = 1, Sunday = 7|
+|startHour|string|       |*Optional*. The store opening working hours|
+|endHour|string|         |*Optional*. The store closing working hours|
+
+It should be possible to search by multiple filters. Apply them in this priority:
+- sort by distance if `lat` and `lng` is provided
+- default: use the `sortOrder` field from `stores` table
+
+
+#### 4. Export all stores to a csv file
+Create a new endpoint that will download all stores to a csv file in browser. When designing a solution, be aware that we have 500000 stores in the provided database.
+
+#### 5. Write some unit tests if you have time left
+
