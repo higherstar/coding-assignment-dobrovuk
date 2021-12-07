@@ -8,7 +8,7 @@ The most important part of the interview will come after this one, when we look 
 
 ## Submitting your solution
 
-Please send us the link to your public git repo fork (e.g. GitHub). We will continue to work on it during the next interview sessions. Please also indicate approximately how long you spent on the submission.
+Create an archive without `node_modules` folder and send it to the person of contact. We will continue to work on it during the next interview sessions. Please also indicate approximately how long you spent on the submission.
 
 ## Local development
 
@@ -73,5 +73,5 @@ It should be possible to search by multiple filters. Apply them in this priority
 #### 4. Export all stores to a csv file
 Create a new endpoint that will download all stores to a csv file in browser. When designing a solution, be aware that we have 500000 stores in the provided database.
 
-#### 5. Write some unit tests if you have time left
+#### 5. Write some unit tests
 
