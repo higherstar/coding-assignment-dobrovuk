@@ -2,7 +2,7 @@
 
 The goal of this assignment is to showcase your ability to develop features in an existing codebase and your coding style. 
 
-Even though the app is small, one can easily spend the whole week working on it: perfecting styles, testing every single method, or carefully crafting every single line of code. Please don't! Do as much as you can in about 3-4 hours and share the results.
+Even though the app is small, one can easily spend the whole week working on it: perfecting styles, testing every single method, or carefully crafting every single line of code. Please don't! Do as much as you can in about 2-3 hours and share the results.
 
 The most important part of the interview will come after this one, when we look at the app together, talk about the decisions you have made, etc..
 
