@@ -19,8 +19,8 @@ interface IStoresProps {
 export default function ({
   stores,
   pagination,
-  onChangePagination,
   totalCount,
+  onChangePagination,
 }: IStoresProps) {
   const handlePageChange = (page: number, pageSize: number) => {
     onChangePagination({ offset: page, limit: pageSize });
