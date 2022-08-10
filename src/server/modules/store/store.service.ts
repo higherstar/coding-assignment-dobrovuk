@@ -32,20 +32,35 @@ export class StoreService {
       lan,
       weekday,
       startHour,
-      endHour
+      endHour,
     } = filterParams;
 
     const queryBuilder = this.storeRepository
       .createQueryBuilder('stores')
-      .select(['stores.*']);
+      .leftJoin('stores.hours', 'store_hours')
+      .select(['stores.*', 'store_hours.*'])
+      .where('stores.id = 1')
 
     if (searchQuery) {
       queryBuilder
-        .andWhere("stores.name LIKE :search")
+        .andWhere('stores.name LIKE :search')
         .setParameter('search', `%${searchQuery}%`);
     }
 
+    if (weekday) {
+      queryBuilder
+        .andWhere('store_hours.weekday = :weekday', { weekday })
+    }
+
+    if (startHour && endHour) {
+      queryBuilder
+        .andWhere('store_hours.from > ":startHour"', { startHour })
+        .andWhere('store_hours.to < ":endHour"', { endHour })
+    }
+
     queryBuilder
+      .groupBy('stores.id')
+      .orderBy('stores.sort_order')
       .offset((offset - 1) * limit)
       .limit(limit);
 

@@ -31,8 +31,8 @@ export default function ({ onChange }: IFiltersProps) {
     }
 
     if (timeRange) {
-      filter.startHour = timeRange[0].format('hh::mm');
-      filter.endHour = timeRange[1].format('hh::mm');
+      filter.startHour = timeRange[0].format('hh:mm');
+      filter.endHour = timeRange[1].format('hh:mm');
     }
 
     if (name) {
