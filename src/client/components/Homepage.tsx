@@ -6,6 +6,7 @@ import 'antd/dist/antd.compact.css';
 import StoreList from './StoreList';
 import Filters from './Filters';
 import { getStores } from '../app/api';
+import { IFilterParam, IPagination } from '../interface/filter.interface';
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
@@ -36,12 +37,19 @@ const StyledTitle = styled(Title)`
 
 export default function () {
   const [stores, setStores] = useState([]);
+  const [totalCount, setTotalCount] = useState<number>();
+  const [pagination, setPagination] = useState<IPagination>({ offset: 1, limit: 10 });
+  const [filters, setFilters] = useState<IFilterParam>({});
 
   useEffect(() => {
     (async () => {
-      setStores((await getStores({})).data);
+      setStores((await getStores({ ...pagination, ...filters })).data);
     })();
-  }, []);
+  }, [pagination, filters]);
+
+  const handleChangePagination = (value: IPagination) => {
+    setPagination(value);
+  };
 
   return (
     <Layout>
@@ -53,7 +61,12 @@ export default function () {
           <Col span={12}>
             <Filters />
             <StyledTitle level={2}>Stores</StyledTitle>
-            <StoreList stores={stores} />
+            <StoreList
+              stores={stores}
+              pagination={pagination}
+              onChangePagination={handleChangePagination}
+              totalCount={totalCount}
+            />
           </Col>
           <Col span={12}>
             <BgImage>
