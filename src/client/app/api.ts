@@ -1,5 +1,5 @@
 import axios from 'axios';
 
-export function getStores() {
-  return axios.get('/api/stores');
+export function getStores(searchParams) {
+  return axios.get('/api/stores', { params: searchParams });
 }

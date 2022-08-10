@@ -13,17 +13,20 @@ export default function () {
   const [stores, setStores] = useState([]);
   const [totalCount, setTotalCount] = useState(500);
   const [offset, setOffset] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [limit, setLimit] = useState(10);
 
   useEffect(() => {
     (async () => {
-      setStores((await getStores()).data);
+      setStores((await getStores({
+        offset,
+        limit,
+      })).data);
     })();
-  }, []);
+  }, [offset, limit]);
 
   const handlePageChange = (page: number, pageSize: number) => {
     setOffset(page);
-    setPageSize(pageSize);
+    setLimit(pageSize);
   };
 
   return (
@@ -32,7 +35,7 @@ export default function () {
         current={offset}
         defaultCurrent={1}
         total={totalCount}
-        pageSize={pageSize}
+        pageSize={limit}
         onChange={handlePageChange}
       />
       {stores.map((store) => (
