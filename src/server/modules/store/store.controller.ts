@@ -20,7 +20,7 @@ export class StoreController {
   async getList(
     @Query() filterParams: FiltersDto,
   ): Promise<StoreTransformer[]> {
-    const stores = await this.storeService.getList();
+    const stores = await this.storeService.getList(filterParams);
     return plainToInstance(StoreTransformer, stores);
   }
 
