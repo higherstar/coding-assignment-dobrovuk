@@ -51,6 +51,10 @@ export default function () {
     setPagination(value);
   };
 
+  const handleChangeFilters = (value: IFilterParam) => {
+    setFilters(value);
+  };
+
   return (
     <Layout>
       <StyledHeader>
@@ -59,7 +63,7 @@ export default function () {
       <Content>
         <Row>
           <Col span={12}>
-            <Filters />
+            <Filters onChange={handleChangeFilters} />
             <StyledTitle level={2}>Stores</StyledTitle>
             <StoreList
               stores={stores}

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Space, Pagination  } from 'antd';
 import styled from 'styled-components';
 
-import { getStores } from '../app/api';
 import StoreCard from './StoreCard';
 import { IPagination } from '../interface/filter.interface';
 
