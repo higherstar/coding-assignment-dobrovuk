@@ -20,6 +20,10 @@ export class StoreService {
     });
   }
 
+  async getAll(): Promise<Store[]> {
+    return this.storeRepository.find();
+  }
+
   async getList(filterParams: FiltersDto): Promise<{
     listData: Store[],
     totalCount: number,
