@@ -1,5 +1,5 @@
-import { Transform } from 'class-transformer';
 import { IsOptional } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 const DEFAULT_PAGE_LIMIT = 10;
 const MAX_PAGE_LIMIT = 1000;
@@ -22,7 +22,7 @@ const transformLimit = (limit: number): number => {
   return limit;
 };
 
-export class PaginationParamsDto {
+export class FiltersDto {
   @IsOptional()
   @Transform((params) => transformPage(params.value))
   offset?: number = 1;
@@ -30,4 +30,22 @@ export class PaginationParamsDto {
   @IsOptional()
   @Transform((params) => transformLimit(params.value))
   limit?: number = 5;
+
+  @IsOptional()
+  searchQuery?: string;
+
+  @IsOptional()
+  lat?: number;
+
+  @IsOptional()
+  lan?: number;
+
+  @IsOptional()
+  weekday?: number;
+
+  @IsOptional()
+  startHour?: string;
+
+  @IsOptional()
+  endHour?: string;
 }

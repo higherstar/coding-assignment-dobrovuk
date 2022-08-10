@@ -9,7 +9,7 @@ import { plainToInstance } from 'class-transformer';
 
 import { StoreService } from './store.service';
 import { StoreTransformer } from './store.transformer';
-import { PaginationParamsDto } from './dto/pagination.dto';
+import { FiltersDto } from './dto/filters.dto';
 
 @Controller('api/stores')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -18,7 +18,7 @@ export class StoreController {
 
   @Get()
   async getList(
-    @Query() paginationParams: PaginationParamsDto,
+    @Query() filterParams: FiltersDto,
   ): Promise<StoreTransformer[]> {
     const stores = await this.storeService.getList();
     return plainToInstance(StoreTransformer, stores);
