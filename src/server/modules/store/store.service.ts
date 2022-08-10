@@ -43,7 +43,6 @@ export class StoreService {
       .createQueryBuilder('stores')
       .leftJoin('stores.hours', 'store_hours')
       .select(['stores.*', 'store_hours.*'])
-      .where('stores.id = 1')
 
     if (searchQuery) {
       queryBuilder
