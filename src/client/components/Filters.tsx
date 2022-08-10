@@ -1,6 +1,7 @@
-import React from 'react';
-import { Button, Space, DatePicker, Row, Col, Select } from 'antd';
+import React, { useState } from 'react';
+import { Button, Space, DatePicker, Row, Col, Select, Input } from 'antd';
 import styled from 'styled-components';
+import moment, { Moment } from 'moment';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -11,14 +12,16 @@ const StyledSpace = styled(Space)`
 `;
 
 export default function () {
-  function findByLocation() {
+  const [name, setName] = useState<string>('');
+
+  const findByLocation = () => {
     alert('TODO: Search for stores by current user location');
   }
 
-  function onTimeRangeSubmit([startDate, endDate]: [
-    moment.Moment,
-    moment.Moment,
-  ]) {
+  const onTimeRangeSubmit = ([startDate, endDate]: [
+    Moment,
+    Moment,
+  ]) => {
     if (startDate && endDate) {
       alert(
         `TODO: Search for store by active hours
@@ -27,8 +30,12 @@ export default function () {
     }
   }
 
-  function onWeekdayChange(value: number) {
+  const onWeekdayChange = (value: number) => {
     alert(`TODO: Search for store by weekday ${value}`);
+  }
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   }
 
   return (
@@ -46,7 +53,8 @@ export default function () {
         <Row>
           <Col>
             <Space direction="horizontal">
-              TODO: add filter by name functionality
+              Name:
+              <Input value={name} onChange={handleNameChange} />
             </Space>
           </Col>
         </Row>
