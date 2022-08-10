@@ -20,7 +20,10 @@ export class StoreService {
     });
   }
 
-  async getList(filterParams: FiltersDto): Promise<Store[]> {
+  async getList(filterParams: FiltersDto): Promise<{
+    listData: Store[],
+    totalCount: number,
+  }> {
     const {
       offset,
       limit,
@@ -34,20 +37,24 @@ export class StoreService {
 
     const queryBuilder = this.storeRepository
       .createQueryBuilder('stores')
-      .select([
-        'stores.uuid AS uuid',
-        'stores.address AS address',
-        'stores.email AS email',
-        'stores.lat AS lat',
-        'stores.long AS long',
-        'stores.name AS name',
-        'stores.sort_order AS sortOrder',
-      ])
+      .select(['stores.*']);
+
+    if (searchQuery) {
+      queryBuilder
+        .andWhere("stores.name LIKE :search")
+        .setParameter('search', `%${searchQuery}%`);
+    }
 
     queryBuilder
       .offset((offset - 1) * limit)
       .limit(limit);
 
-    return await queryBuilder.execute();
+    const totalCount = await new SelectQueryBuilder(queryBuilder).getCount();
+    const listData = await queryBuilder.execute();
+
+    return {
+      totalCount,
+      listData,
+    }
   }
 }

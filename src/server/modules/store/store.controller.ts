@@ -6,6 +6,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
+import { Store } from 'server/data/models';
 
 import { StoreService } from './store.service';
 import { StoreTransformer } from './store.transformer';
@@ -19,9 +20,12 @@ export class StoreController {
   @Get()
   async getList(
     @Query() filterParams: FiltersDto,
-  ): Promise<StoreTransformer[]> {
-    const stores = await this.storeService.getList(filterParams);
-    return plainToInstance(StoreTransformer, stores);
+  ): Promise<{
+    listData: Store[],
+    totalCount: number,
+  }> {
+    const data = await this.storeService.getList(filterParams);
+    return data;
   }
 
   /**

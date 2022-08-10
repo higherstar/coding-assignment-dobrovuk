@@ -43,7 +43,11 @@ export default function () {
 
   useEffect(() => {
     (async () => {
-      setStores((await getStores({ ...pagination, ...filters })).data);
+      const res = await getStores({ ...pagination, ...filters });
+      if (res.data) {
+        setStores(res.data?.listData);
+        setTotalCount(res.data?.totalCount);
+      }
     })();
   }, [pagination, filters]);
 
