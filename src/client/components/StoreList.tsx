@@ -9,20 +9,15 @@ const StyledSpace = styled(Space)`
   width: 100%;
 `;
 
-export default function () {
-  const [stores, setStores] = useState([]);
+interface IStoresProps {
+  stores: any[],
+}
+
+export default function ({ stores }: IStoresProps) {
   const [totalCount, setTotalCount] = useState(500);
   const [offset, setOffset] = useState(1);
   const [limit, setLimit] = useState(10);
 
-  useEffect(() => {
-    (async () => {
-      setStores((await getStores({
-        offset,
-        limit,
-      })).data);
-    })();
-  }, [offset, limit]);
 
   const handlePageChange = (page: number, pageSize: number) => {
     setOffset(page);

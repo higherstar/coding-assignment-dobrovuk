@@ -13,6 +13,8 @@ const StyledSpace = styled(Space)`
 
 export default function () {
   const [name, setName] = useState<string>('');
+  const [timeRange, setTimeRange] = useState<[Moment | null, Moment | null]>();
+  const [weekday, setWeekday] = useState<number>();
 
   const findByLocation = () => {
     alert('TODO: Search for stores by current user location');
@@ -23,15 +25,12 @@ export default function () {
     Moment,
   ]) => {
     if (startDate && endDate) {
-      alert(
-        `TODO: Search for store by active hours
-        from ${startDate.format('HH:mm')} to ${endDate.format('HH:mm')}`,
-      );
+      setTimeRange([startDate, endDate]);
     }
   }
 
   const onWeekdayChange = (value: number) => {
-    alert(`TODO: Search for store by weekday ${value}`);
+    setWeekday(value);
   }
 
   const handleNameChange = (e) => {
@@ -61,7 +60,7 @@ export default function () {
         <Row>
           <Col>
             Filter stores by working hours
-            <Select onChange={onWeekdayChange} placeholder="Pick week day">
+            <Select value={weekday} onChange={onWeekdayChange} placeholder="Pick week day">
               <Option value={1}>Monday</Option>
               <Option value={2}>Tuesday</Option>
               <Option value={3}>Wednesday</Option>
@@ -72,7 +71,7 @@ export default function () {
             </Select>
             <RangePicker
               format="HH:mm"
-              onChange={console.log}
+              value={timeRange}
               onOk={onTimeRangeSubmit}
               picker="time"
             />

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Layout, Avatar, Row, Col, Typography } from 'antd';
 
 import 'antd/dist/antd.compact.css';
 import StoreList from './StoreList';
 import Filters from './Filters';
+import { getStores } from '../app/api';
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
@@ -34,6 +35,14 @@ const StyledTitle = styled(Title)`
 `;
 
 export default function () {
+  const [stores, setStores] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      setStores((await getStores({})).data);
+    })();
+  }, []);
+
   return (
     <Layout>
       <StyledHeader>
@@ -44,7 +53,7 @@ export default function () {
           <Col span={12}>
             <Filters />
             <StyledTitle level={2}>Stores</StyledTitle>
-            <StoreList />
+            <StoreList stores={stores} />
           </Col>
           <Col span={12}>
             <BgImage>
